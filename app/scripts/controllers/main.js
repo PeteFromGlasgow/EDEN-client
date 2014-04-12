@@ -68,7 +68,7 @@ angular.module('edenClientApp')
     stage.addChild(ground);
     stage.addChild(base);
     console.log($scope);
-    for (var i = 0; i < (urlHelper.getURLParameters("peoplecount") !== undefined ? parseInt(urlHelper.getURLParameters("peoplecount")) : 10); i++) {
+    for (var i = 0; i < (urlHelper.getURLParameters("peoplecount") !== undefined ? parseInt(urlHelper.getURLParameters("peoplecount")) : 7); i++) {
       var panel = objectService.getPerson();
       panels.push(panel);
       stage.addChild(panel);
@@ -77,9 +77,11 @@ angular.module('edenClientApp')
       panel.y += Math.random()*800;
     };
 
-    componentService.getComponents(function(components){
-      console.log(components);
-    })
+    $scope.components = [];
+      
+    componentService.getComponents(function(comps){
+      $scope.components = comps;
+    });
     
 
     //Update stage will render next frame

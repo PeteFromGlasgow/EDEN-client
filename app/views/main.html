@@ -1,11 +1,15 @@
 <div class="container">
   <div class="row">
-     <div class="col-md-8">
+     <div class="col-md-9">
        <canvas id='gamecanvas'>
 
        </canvas>
      </div>
-     <div class="col-md-4">
+     <div class="col-md-3">
+      <div>
+          <h3>Components</h3>
+          <p ng-repeat="c in components">{{c.name}}</p>
+      </div>
       <div>
         <h3>Resources</h3>
         <p>You currently have no resources</p>
