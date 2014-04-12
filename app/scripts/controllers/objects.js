@@ -39,14 +39,18 @@
 
  	 out.getPerson = function(){
  	 	var colors = ['red','blue','green','black','red'];
+ 	 	var skins = ['brown','pink','gray'];
  	 	var container = new createjs.Container();
  		var square = new createjs.Shape();
 
- 		var choice = Math.floor(Math.random()*5);
- 		square.graphics.beginFill(colors[choice]).drawRect(0,0,80,30);
+ 		var choice = Math.floor(Math.random()*colors.length);
+ 		var skinchoice = Math.floor(Math.random()*skins.length);
+ 		square.graphics.beginFill(colors[choice]).drawRect(0,0,40,15);
+
  		var circle = new createjs.Shape();
- 		circle.graphics.beginFill("pink").drawCircle(20,5,10);
+ 		circle.graphics.beginFill(skins[skinchoice]).drawCircle(20,7,10);
  		container.addChild(square,circle);
+ 		container.shadow = new createjs.Shadow("#000000", 3, 3, 5);
  		return container;
  	}
 

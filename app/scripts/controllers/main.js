@@ -44,12 +44,13 @@ stage.update()
 
 
 angular.module('edenClientApp')
-  .controller('MainCtrl', function ($scope, objectService, urlHelper) {
+  .controller('MainCtrl', function ($scope, objectService, componentService, urlHelper) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
+    var spaceQuake = false;
 
     // Main Game controller
     var stage = new createjs.Stage("gamecanvas");
@@ -67,7 +68,7 @@ angular.module('edenClientApp')
     stage.addChild(ground);
     stage.addChild(base);
     console.log($scope);
-    for (var i = 0; i < (urlHelper.getURLParameters("peoplecount") !== undefined ? parseInt(urlHelper.getURLParameters("peoplecount")) : 100); i++) {
+    for (var i = 0; i < (urlHelper.getURLParameters("peoplecount") !== undefined ? parseInt(urlHelper.getURLParameters("peoplecount")) : 10); i++) {
       var panel = objectService.getPerson();
       panels.push(panel);
       stage.addChild(panel);
@@ -76,6 +77,9 @@ angular.module('edenClientApp')
       panel.y += Math.random()*800;
     };
 
+    componentService.getComponents(function(components){
+      console.log(components);
+    })
     
 
     //Update stage will render next frame
@@ -87,6 +91,7 @@ angular.module('edenClientApp')
 	}
 	window.onresize();
 
+  
   
   var step = 0;
 	setInterval(function(){
@@ -100,8 +105,10 @@ angular.module('edenClientApp')
       }
       panel.rotation+=Math.random()*4-2;
     };
-		
-
+    if (spaceQuake){
+      stage.x =Math.sin(panel.rotation)*10;
+      stage.y =Math.sin(panel.rotation)*10;
+    }
     if (step % 1000 == 0){
 
     }
