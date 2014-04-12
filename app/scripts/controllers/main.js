@@ -92,6 +92,9 @@ angular.module('edenClientApp')
       panel.x+=2*Math.cos((panel.rotation+90)*0.0174532925);
       panel.y+=2*Math.sin((panel.rotation+90)*0.0174532925);
       step++;
+      if(panel.x > 1300 || panel.x < -20 || panel.y > 820 || panel.y < -20){
+        panel.rotation += 180;
+      }
       panel.rotation+=Math.random()*4-2;
     };
 		
