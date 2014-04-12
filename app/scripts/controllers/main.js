@@ -44,7 +44,7 @@ stage.update()
 
 
 angular.module('edenClientApp')
-  .controller('MainCtrl', function ($scope, objectService) {
+  .controller('MainCtrl', function ($scope, objectService, urlHelper) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
@@ -66,7 +66,8 @@ angular.module('edenClientApp')
     var panels = [];
     stage.addChild(ground);
     stage.addChild(base);
-    for (var i = 0; i < 100; i++) {
+    console.log($scope);
+    for (var i = 0; i < (urlHelper.getURLParameters("peoplecount") !== undefined ? parseInt(urlHelper.getURLParameters("peoplecount")) : 100); i++) {
       var panel = objectService.getPerson();
       panels.push(panel);
       stage.addChild(panel);
