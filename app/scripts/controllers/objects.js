@@ -21,10 +21,10 @@
  	}
 
  	 out.getPerson = function(){
- 	 	var colors = ['red','blue','green','black','pink','red'];
+ 	 	var colors = ['red','blue','green','black','red'];
  	 	var container = new createjs.Container();
  		var square = new createjs.Shape();
- 		var choice = Math.floor(Math.random()*6);
+ 		var choice = Math.floor(Math.random()*5);
  		square.graphics.beginFill(colors[choice]).drawRect(0,0,80,30);
  		var circle = new createjs.Shape();
  		circle.graphics.beginFill("pink").drawCircle(40,10,20);
