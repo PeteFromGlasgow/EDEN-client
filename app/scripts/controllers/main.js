@@ -59,10 +59,12 @@ angular.module('edenClientApp')
     circle.x = circle.y = 50;
     //Add Shape instance to stage display list.
 
+    var ground = objectService.getGround();
     var base = objectService.getGardenBase();
     var panel = objectService.getPerson();
 
     var panels = [];
+    stage.addChild(ground);
     stage.addChild(base);
     for (var i = 0; i < 100; i++) {
       var panel = objectService.getPerson();

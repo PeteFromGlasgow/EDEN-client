@@ -7,9 +7,15 @@
  .service('objectService', function(){
  	var out = {};
 
+ 	out.getGround = function(){
+ 		var square = new createjs.Shape();
+ 		square.graphics.beginFill("#FF6633").drawRect(0,0,1280,800);
+ 		return square
+ 	}
+
  	out.getGardenBase = function(){
  		var square = new createjs.Shape();
- 		square.graphics.beginFill("brown").drawRect(220,20,780,780);
+ 		square.graphics.beginFill("#883311").drawRect(220,20,780,780);
  		return square
  	}
 
