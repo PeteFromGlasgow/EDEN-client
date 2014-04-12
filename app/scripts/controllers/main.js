@@ -6,8 +6,10 @@ function onResize(stage)
 {
 var keepAspectRatio = true;
 // browser viewport size
-var w = window.innerWidth;
-var h = window.innerHeight;
+var canvasparent = $('#gamecanvas').parent();
+var w = canvasparent.innerWidth();
+var h = canvasparent.innerHeight();
+
 
 // stage dimensions
 var ow = 1280; // your stage width
@@ -58,7 +60,10 @@ angular.module('edenClientApp')
     //Add Shape instance to stage display list.
 
     var base = objectService.getGardenBase();
+    var panel = objectService.getSolarPanel();
     stage.addChild(base);
+    stage.addChild(panel);
+
     //Update stage will render next frame
     stage.update();
 
@@ -69,7 +74,9 @@ angular.module('edenClientApp')
 	window.onresize();
 
 	setInterval(function(){
-		circle.x++;
+		panel.x++;
+    panel.y+=2;
+    panel.rotation++;
 		stage.update();
 	},33);
 

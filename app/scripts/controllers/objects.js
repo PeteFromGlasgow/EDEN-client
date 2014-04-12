@@ -9,7 +9,14 @@
 
  	out.getGardenBase = function(){
  		var square = new createjs.Shape();
- 		square.graphics.beginFill("brown").drawRect(0,0,1280,800);
+ 		square.graphics.beginFill("brown").drawRect(220,20,780,780);
+ 		return square
+ 	}
+
+ 	out.getSolarPanel = function(){
+ 		var square = new createjs.Shape();
+ 		square.graphics.beginFill("black").drawRect(0,0,40,40);
+ 		square.rotation = 45
  		return square
  	}
 
