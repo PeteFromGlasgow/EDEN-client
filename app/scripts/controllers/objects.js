@@ -6,7 +6,7 @@
  angular.module('edenClientApp')
  .service('objectService', function(){
  	var out = {};
-
+ 	var gridSize = 20;
  	out.getGround = function(){
  		var square = new createjs.Shape();
  		square.graphics.beginFill("#FF6633").drawRect(0,0,1280,800);
@@ -14,9 +14,20 @@
  	}
 
  	out.getGardenBase = function(){
+ 	 	var container = new createjs.Container();
  		var square = new createjs.Shape();
  		square.graphics.beginFill("#883311").drawRect(220,20,760,760);
- 		return square
+ 		container.addChild(square);
+ 		for (var i = 0; i < 760/gridSize+1; i++) {
+ 			for (var j = 0; j < 760/gridSize+1; j++) {
+ 			 	var square = new createjs.Shape();
+ 				square.graphics.beginStroke("#880000").drawRect(220,20,i*gridSize,j*gridSize);
+ 				container.addChild(square);	
+ 			};
+ 		};
+ 		var square = new createjs.Shape();
+ 		square.graphics.beginFill("#883311").drawRect(220,20,760,760);
+ 		return container;
  	}
 
  	out.getSolarPanel = function(){
