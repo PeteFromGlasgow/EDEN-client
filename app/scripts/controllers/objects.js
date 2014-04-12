@@ -15,7 +15,7 @@
 
  	out.getGardenBase = function(){
  		var square = new createjs.Shape();
- 		square.graphics.beginFill("#883311").drawRect(220,20,780,780);
+ 		square.graphics.beginFill("#883311").drawRect(220,20,760,760);
  		return square
  	}
 
@@ -31,9 +31,9 @@
  	 	var container = new createjs.Container();
  		var square = new createjs.Shape();
  		var choice = Math.floor(Math.random()*6);
- 		square.graphics.beginFill(colors[choice]).drawRect(0,0,80,30);
+ 		square.graphics.beginFill(colors[choice]).drawRect(0,0,40,15);
  		var circle = new createjs.Shape();
- 		circle.graphics.beginFill("pink").drawCircle(40,10,20);
+ 		circle.graphics.beginFill("pink").drawCircle(20,5,10);
  		container.addChild(square,circle);
  		return container;
  	}
