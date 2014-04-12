@@ -60,9 +60,20 @@ angular.module('edenClientApp')
     //Add Shape instance to stage display list.
 
     var base = objectService.getGardenBase();
-    var panel = objectService.getSolarPanel();
+    var panel = objectService.getPerson();
+
+    var panels = [];
     stage.addChild(base);
-    stage.addChild(panel);
+    for (var i = 0; i < 100; i++) {
+      var panel = objectService.getPerson();
+      panels.push(panel);
+      stage.addChild(panel);
+      panel.rotation=360*Math.random();
+      panel.x += Math.random()*800;
+      panel.y += Math.random()*800;
+    };
+
+    
 
     //Update stage will render next frame
     stage.update();
@@ -73,10 +84,22 @@ angular.module('edenClientApp')
 	}
 	window.onresize();
 
+  
+  var step = 0;
 	setInterval(function(){
-		panel.x++;
-    panel.y+=2;
-    panel.rotation++;
+    for (var i = 0; i < panels.length; i++) {
+     var panel = panels[i]
+      panel.x+=2*Math.cos((panel.rotation+90)*0.0174532925);
+      panel.y+=2*Math.sin((panel.rotation+90)*0.0174532925);
+      step++;
+      panel.rotation+=Math.random()*4-2;
+    };
+		
+
+    if (step % 1000 == 0){
+
+    }
+
 		stage.update();
 	},33);
 

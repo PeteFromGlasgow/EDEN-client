@@ -20,6 +20,18 @@
  		return square
  	}
 
+ 	 out.getPerson = function(){
+ 	 	var colors = ['red','blue','green','black','pink','red'];
+ 	 	var container = new createjs.Container();
+ 		var square = new createjs.Shape();
+ 		var choice = Math.floor(Math.random()*6);
+ 		square.graphics.beginFill(colors[choice]).drawRect(0,0,80,30);
+ 		var circle = new createjs.Shape();
+ 		circle.graphics.beginFill("pink").drawCircle(40,10,20);
+ 		container.addChild(square,circle);
+ 		return container;
+ 	}
+
  	return out;
 
  })
