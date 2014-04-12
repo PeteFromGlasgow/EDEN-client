@@ -10,8 +10,8 @@ var w = window.innerWidth;
 var h = window.innerHeight;
 
 // stage dimensions
-var ow = 640; // your stage width
-var oh = 480; // your stage height
+var ow = 1280; // your stage width
+var oh = 800; // your stage height
 
 if (keepAspectRatio)
 {
@@ -42,7 +42,7 @@ stage.update()
 
 
 angular.module('edenClientApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('MainCtrl', function ($scope, objectService) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
@@ -56,7 +56,9 @@ angular.module('edenClientApp')
     //Set position of Shape instance.
     circle.x = circle.y = 50;
     //Add Shape instance to stage display list.
-    stage.addChild(circle);
+
+    var base = objectService.getGardenBase();
+    stage.addChild(base);
     //Update stage will render next frame
     stage.update();
 
@@ -64,5 +66,11 @@ angular.module('edenClientApp')
 	{
 	     onResize(stage);
 	}
+	window.onresize();
+
+	setInterval(function(){
+		circle.x++;
+		stage.update();
+	},33);
 
   });
