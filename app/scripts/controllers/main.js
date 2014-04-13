@@ -78,20 +78,36 @@ angular.module('edenClientApp')
     };
 
     $scope.availableComponents = [];
+    $scope.availableEnvironments = [];
+    
+    componentService.getEnvironments(function(envs){
+      $scope.availableEnvironments = envs;
+      $scope.simulationState.environmentN = $scope.availableEnvironments[0];
+    });
+      
+    
     $scope.simulationState = {}
+    
     $scope.simulationState.colony = {};
     $scope.colony = $scope.simulationState.colony;
-    $scope.colony.name = "";
-    $scope.colony.components = [];
+    $scope.colony.name = "Simulation name";
+    $scope.colony.children = [];
       
     componentService.getComponents(function(comps){
       $scope.availableComponents = comps;
     });
       
     $scope.addComponent = function (id) {
-        $scope.colony.components.push($scope.availableComponents[id]);
+        $scope.colony.children.push($scope.availableComponents[id]);
         console.log($scope.simulationState);
     }
+    
+    setTimeout(function () {
+        console.log($scope.simulationState);
+        componentService.updateSimulation($scope.simulationState, function (newSimState) {
+            console.log(newSimState);
+        });
+    }, 6000);
     
 
     //Update stage will render next frame
