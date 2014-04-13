@@ -1,11 +1,24 @@
 <div class="container">
   <div class="row">
-     <div class="col-md-8">
-       <canvas id='gamecanvas'>
+      <div class="col-md-3">
+      <input ng-model="simulationState.colony.name" />
+      </div>
+      
+      <div class="col-md-3">
+      <select ng-model="simulationState.environmentName" ng-options="env for env in availableEnvironments" />
+      </div>
+  </div>
+  <div class="row">
+     <div class="col-md-9">
+       <canvas id='gamecanvas' droppable drop="addComponent">
 
        </canvas>
      </div>
-     <div class="col-md-4">
+     <div class="col-md-3">
+      <div>
+          <h3>Components</h3>
+          <p ng-repeat="c in availableComponents" draggable id="{{$index}}">{{c.name}}</p>
+      </div>
       <div>
         <h3>Resources</h3>
         <p>You currently have no resources</p>

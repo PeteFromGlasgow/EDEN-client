@@ -68,7 +68,7 @@ angular.module('edenClientApp')
     stage.addChild(ground);
     stage.addChild(base);
     console.log($scope);
-    for (var i = 0; i < (urlHelper.getURLParameters("peoplecount") !== undefined ? parseInt(urlHelper.getURLParameters("peoplecount")) : 10); i++) {
+    for (var i = 0; i < (urlHelper.getURLParameters("peoplecount") !== undefined ? parseInt(urlHelper.getURLParameters("peoplecount")) : 7); i++) {
       var panel = objectService.getPerson();
       panels.push(panel);
       stage.addChild(panel);
@@ -77,9 +77,49 @@ angular.module('edenClientApp')
       panel.y += Math.random()*800;
     };
 
-    componentService.getComponents(function(components){
-      console.log(components);
-    })
+    $scope.availableComponents = [];
+    $scope.availableEnvironments = [];
+    
+    componentService.getEnvironments(function(envs){
+      $scope.availableEnvironments = envs;
+      $scope.simulationState.environmentName = $scope.availableEnvironments[0];
+    });
+      
+    
+    $scope.simulationState = {}
+    
+    $scope.simulationState.colony = {};
+    $scope.colony = $scope.simulationState.colony;
+    $scope.simulationState.colony.name = "Simulation name";
+    $scope.simulationState.colony.components = [];
+      
+    componentService.getComponents(function(comps){
+      $scope.availableComponents = comps;
+    });
+      
+    $scope.addComponent = function (id) {
+        $scope.simulationState.colony.components.push($scope.availableComponents[id]);
+        console.log(id);
+    }
+    
+    setInterval(function () {
+        console.log($scope.simulationState);
+        componentService.updateSimulation($scope.simulationState, function (newSimState) {
+            $scope.simulationState = newSimState;
+        });
+    }, 6000);
+      
+      
+    $scope.simulationState.resources = {};
+    $scope.simulationState.resources.resourceMap = {};
+    $scope.resources = $scope.simulationState.resources.resourceMap;
+      
+    componentService.getResourceNames(function (resources) {
+       for (var i = 0; i < resources.length; i++) {
+           var resource = resources[i];
+           $scope.resources.resource = {"count": 100};
+       }
+    });
     
 
     //Update stage will render next frame
@@ -116,4 +156,85 @@ angular.module('edenClientApp')
 		stage.update();
 	},33);
 
-  });
+  }).directive('draggable', function() {
+    return function($scope, element) {
+        var el = element[0];
+
+        el.draggable = true;
+
+        el.addEventListener(
+            'dragstart',
+            function(e) {
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData("id",this.id);
+                this.classList.add('drag');
+                return false;
+            },
+            false
+        );
+
+        el.addEventListener(
+            'dragend',
+            function(e) {
+                this.classList.remove('drag');
+                return false;
+            },
+            false
+        );
+    }
+}).directive('droppable', function() {
+    return {
+        scope: {
+            drop: '&',
+            bin:  '='
+        },
+        link: function($scope, element) {
+            var el = element[0];
+            
+            el.addEventListener(
+                'dragover',
+                function(e) {
+                    e.dataTransfer.dropEffect = 'move';
+                    if (e.preventDefault) e.preventDefault();
+                    this.classList.add('over');
+                    return false;
+                },
+                false
+            );
+            
+            el.addEventListener(
+                'dragenter',
+                function(e) {
+                    this.classList.add('over');
+                    return false;
+                },
+                false
+            );
+
+            el.addEventListener(
+                'dragleave',
+                function(e) {
+                    this.classList.remove('over');
+                    return false;
+                },
+                false
+            );
+            
+            el.addEventListener(
+                'drop',
+                function(e) {
+                    if (e.stopPropagation) e.stopPropagation();
+                    this.classList.remove('over');
+                    var test = e.dataTransfer.getData("id");
+                    $scope.$apply(function($scope) {
+                        var fn = $scope.drop();
+                        if ('undefined' !== typeof fn) {
+                          fn(e.dataTransfer.getData("id"));
+                        }
+                    });
+                },
+                false
+            );
+        }
+    }
+});
