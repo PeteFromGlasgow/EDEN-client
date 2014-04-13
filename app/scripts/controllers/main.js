@@ -103,11 +103,27 @@ angular.module('edenClientApp')
     }
     
     setInterval(function () {
-        console.log($scope.simulationState);
+        console.log($scope.simulationState.toJson);
         componentService.updateSimulation($scope.simulationState, function (newSimState) {
-            console.log(newSimState);
+            $scope.$apply(newSimState);
         });
     }, 6000);
+      
+      
+    $scope.simulationState.resources = {};
+    $scope.simulationState.resources.resourceMap = [];
+    $scope.resources = $scope.simulationState.resources.resourceMap;
+      
+    componentService.getResourceNames(function (resources) {
+       for (var i = 0; i < resources.length; i++) {
+           var resource = resources[i];
+           $scope.resources.push({
+                resource : {
+                    "count": 100
+                }
+           });
+       }
+    });
     
 
     //Update stage will render next frame

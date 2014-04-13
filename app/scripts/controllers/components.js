@@ -23,6 +23,13 @@
             cb(data);
         });
     }
+    
+    component.getResourceNames = function (cb){
+        $http({url: host+"resources", method:"GET"})
+        .success(function (data){
+            cb(data);
+        });
+    }
 
  	return component;
  	
