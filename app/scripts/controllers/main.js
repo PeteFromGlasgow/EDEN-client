@@ -1,6 +1,32 @@
 'use strict';
 
 
+function posAdjust(XorY,item){
+  var canvasparent = $('#gamecanvas').parent();
+  var w = canvasparent.innerWidth();
+  var h = canvasparent.innerHeight();
+  if(XorY === 'x'){
+    var canv = canvasparent.offset().left;
+
+  } else {
+    var canv = canvasparent.offset().top;
+  }
+  item - canv;
+
+  var pushGrid = (XorY === 'x') ? -260 : -40;
+
+  
+  
+  // stage dimensions
+  var ow = 1280; // your stage width
+  var oh = 800; // your stage height
+
+   // keep aspect ratio
+   var scale = Math.min(w / ow, h / oh);
+
+  var position = (item*1/scale)+pushGrid; 
+  return position-(position%20); 
+}
 // Stolen so we dont have to care about the canvas
 function onResize(stage)
 {
@@ -101,10 +127,31 @@ angular.module('edenClientApp')
       $scope.availableComponents = comps;
     });
       
-    $scope.addComponent = function (id) {
+    $scope.addComponent = function (id,posx,posy) {
+      console.log(id);
         $scope.simulationState.colony.components.push($scope.availableComponents[id]);
-        console.log(id);
+        var greenhouse;
+        switch(id)
+        {
+          case "0":
+            greenhouse = objectService.getBalloonGreenhouse();
+            break;
+          case "2":
+            greenhouse = objectService.getFlatPackGreenhouse();
+            break;
+          case "3":
+            greenhouse = objectService.getAwesomeGreenhouse();
+            break;
+          default:
+            greenhouse = objectService.getBalloonGreenhouse();
+        }
+        
+        greenhouse.x = posAdjust("x",posx);
+        greenhouse.y = posAdjust("y",posy);
+        stage.addChild(greenhouse);
+        
     }
+
     
     setInterval(function () {
         console.log($scope.simulationState);
@@ -233,7 +280,10 @@ angular.module('edenClientApp')
                     $scope.$apply(function($scope) {
                         var fn = $scope.drop();
                         if ('undefined' !== typeof fn) {
-                          fn(e.dataTransfer.getData("id"));
+                          var dropx = e.x;
+                          var dropy = e.y;
+                          fn(e.dataTransfer.getData("id"),dropx,dropy);
+   
                         }
                     });
                 },

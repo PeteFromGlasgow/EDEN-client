@@ -99,7 +99,7 @@
  	 	var height = 10 * gridSize;
 
  		var square = new createjs.Shape();
- 		square.graphics.beginStroke("#FFF").setStrokeStyle(10).drawPolyStar(0, 0, width/2, 6, 0, -90);
+ 		square.graphics.beginStroke("#FFF").setStrokeStyle(10).drawPolyStar(0, 0, width/2, 6, 0.2, -90);
  		square.x +=width/2
  		square.y +=width/2
 
