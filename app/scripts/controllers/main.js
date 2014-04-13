@@ -82,7 +82,7 @@ angular.module('edenClientApp')
     
     componentService.getEnvironments(function(envs){
       $scope.availableEnvironments = envs;
-      $scope.simulationState.environmentN = $scope.availableEnvironments[0];
+      $scope.simulationState.environmentName = $scope.availableEnvironments[0];
     });
       
     
@@ -91,18 +91,18 @@ angular.module('edenClientApp')
     $scope.simulationState.colony = {};
     $scope.colony = $scope.simulationState.colony;
     $scope.colony.name = "Simulation name";
-    $scope.colony.children = [];
+    $scope.colony.components = [];
       
     componentService.getComponents(function(comps){
       $scope.availableComponents = comps;
     });
       
     $scope.addComponent = function (id) {
-        $scope.colony.children.push($scope.availableComponents[id]);
+        $scope.colony.components.push($scope.availableComponents[id]);
         console.log($scope.simulationState);
     }
     
-    setTimeout(function () {
+    setInterval(function () {
         console.log($scope.simulationState);
         componentService.updateSimulation($scope.simulationState, function (newSimState) {
             console.log(newSimState);
