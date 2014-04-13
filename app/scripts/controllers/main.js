@@ -90,38 +90,34 @@ angular.module('edenClientApp')
     
     $scope.simulationState.colony = {};
     $scope.colony = $scope.simulationState.colony;
-    $scope.colony.name = "Simulation name";
-    $scope.colony.components = [];
+    $scope.simulationState.colony.name = "Simulation name";
+    $scope.simulationState.colony.components = [];
       
     componentService.getComponents(function(comps){
       $scope.availableComponents = comps;
     });
       
     $scope.addComponent = function (id) {
-        $scope.colony.components.push($scope.availableComponents[id]);
-        console.log($scope.simulationState);
+        $scope.simulationState.colony.components.push($scope.availableComponents[id]);
+        console.log(id);
     }
     
     setInterval(function () {
-        console.log($scope.simulationState.toJson);
+        console.log($scope.simulationState);
         componentService.updateSimulation($scope.simulationState, function (newSimState) {
-            $scope.$apply(newSimState);
+            $scope.simulationState = newSimState;
         });
     }, 6000);
       
       
     $scope.simulationState.resources = {};
-    $scope.simulationState.resources.resourceMap = [];
+    $scope.simulationState.resources.resourceMap = {};
     $scope.resources = $scope.simulationState.resources.resourceMap;
       
     componentService.getResourceNames(function (resources) {
        for (var i = 0; i < resources.length; i++) {
            var resource = resources[i];
-           $scope.resources.push({
-                resource : {
-                    "count": 100
-                }
-           });
+           $scope.resources.resource = {"count": 100};
        }
     });
     
