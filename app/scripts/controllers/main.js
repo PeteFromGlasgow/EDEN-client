@@ -63,10 +63,14 @@ angular.module('edenClientApp')
     var ground = objectService.getGround();
     var base = objectService.getGardenBase();
     var panel = objectService.getPerson();
+    var greenhouse = objectService.getAwesomeGreenhouse();
+    greenhouse.x += 220;
+    greenhouse.y += 20;
 
     var panels = [];
     stage.addChild(ground);
     stage.addChild(base);
+    stage.addChild(greenhouse)
     console.log($scope);
     for (var i = 0; i < (urlHelper.getURLParameters("peoplecount") !== undefined ? parseInt(urlHelper.getURLParameters("peoplecount")) : 7); i++) {
       var panel = objectService.getPerson();

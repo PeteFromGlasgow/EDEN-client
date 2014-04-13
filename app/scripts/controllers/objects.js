@@ -54,6 +54,67 @@
  		return container;
  	}
 
+ 	out.getFlatPackGreenhouse = function(){
+ 	 	var container = new createjs.Container();
+ 	 	var width = 10 * gridSize;
+ 	 	var height = 10 * gridSize;
+
+ 		var square = new createjs.Shape();
+ 		square.graphics.beginFill("#FFF").drawRect(0,0,gridSize,height);
+ 		square.graphics.beginFill("#FFF").drawRect(0,0,width,gridSize);
+ 		square.graphics.beginFill("#FFF").drawRect(0,height-gridSize,width,gridSize);
+ 		square.graphics.beginFill("#FFF").drawRect(width,0,gridSize,height);
+
+ 		square.rotation =0;
+ 		container.addChild(square);
+
+ 	 	container.tickAnimate = function(){
+
+ 	 	}
+
+ 	 	return container;
+ 	}
+
+ 	 out.getBalloonGreenhouse = function(){
+ 	 	var container = new createjs.Container();
+ 	 	var width = 10 * gridSize;
+ 	 	var height = 10 * gridSize;
+
+ 		var square = new createjs.Shape();
+ 		square.graphics.beginStroke("#FFF").setStrokeStyle(20).drawCircle(width/2,width/2,width/2);
+
+ 		square.rotation =0;
+ 		container.addChild(square);
+
+ 	 	container.tickAnimate = function(){
+
+ 	 	}
+
+ 	 	return container;
+ 	}
+
+ 	out.getAwesomeGreenhouse = function(){
+ 	 	var container = new createjs.Container();
+ 	 	var width = 10 * gridSize;
+ 	 	var height = 10 * gridSize;
+
+ 		var square = new createjs.Shape();
+ 		square.graphics.beginStroke("#FFF").setStrokeStyle(10).drawPolyStar(0, 0, width/2, 6, 0, -90);
+ 		square.x +=width/2
+ 		square.y +=width/2
+
+ 		square.rotation =0;
+ 		container.addChild(square);
+
+ 	 	container.tickAnimate = function(){
+
+ 	 	}
+
+ 	 	return container;
+ 	}
+
+
+
  	return out;
 
  })
