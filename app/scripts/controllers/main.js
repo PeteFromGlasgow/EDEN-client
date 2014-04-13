@@ -77,11 +77,21 @@ angular.module('edenClientApp')
       panel.y += Math.random()*800;
     };
 
-    $scope.components = [];
+    $scope.availableComponents = [];
+    $scope.simulationState = {}
+    $scope.simulationState.colony = {};
+    $scope.colony = $scope.simulationState.colony;
+    $scope.colony.name = "";
+    $scope.colony.components = [];
       
     componentService.getComponents(function(comps){
-      $scope.components = comps;
+      $scope.availableComponents = comps;
     });
+      
+    $scope.addComponent = function (id) {
+        $scope.colony.components.push($scope.availableComponents[id]);
+        console.log($scope.simulationState);
+    }
     
 
     //Update stage will render next frame
@@ -119,7 +129,7 @@ angular.module('edenClientApp')
 	},33);
 
   }).directive('draggable', function() {
-    return function(scope, element) {
+    return function($scope, element) {
         var el = element[0];
 
         el.draggable = true;
@@ -128,7 +138,7 @@ angular.module('edenClientApp')
             'dragstart',
             function(e) {
                 e.dataTransfer.effectAllowed = 'move';
-                e.dataTransfer.setData("name",this.innerHTML);
+                e.dataTransfer.setData("id",this.id);
                 this.classList.add('drag');
                 return false;
             },
@@ -146,8 +156,11 @@ angular.module('edenClientApp')
     }
 }).directive('droppable', function() {
     return {
-        scope: {},
-        link: function(scope, element) {
+        scope: {
+            drop: '&',
+            bin:  '='
+        },
+        link: function($scope, element) {
             var el = element[0];
             
             el.addEventListener(
@@ -184,9 +197,13 @@ angular.module('edenClientApp')
                 function(e) {
                     if (e.stopPropagation) e.stopPropagation();
                     this.classList.remove('over');
-                    console.log("Added: " + e.dataTransfer.getData("name"));
-
-                    return false;
+                    var test = e.dataTransfer.getData("id");
+                    $scope.$apply(function($scope) {
+                        var fn = $scope.drop();
+                        if ('undefined' !== typeof fn) {
+                          fn(e.dataTransfer.getData("id"));
+                        }
+                    });
                 },
                 false
             );

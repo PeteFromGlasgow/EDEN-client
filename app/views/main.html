@@ -1,14 +1,17 @@
 <div class="container">
   <div class="row">
+      <input ng-model="simulationState.colony.name" />
+  </div>
+  <div class="row">
      <div class="col-md-9">
-       <canvas id='gamecanvas' droppable>
+       <canvas id='gamecanvas' droppable drop="addComponent">
 
        </canvas>
      </div>
      <div class="col-md-3">
       <div>
           <h3>Components</h3>
-          <p ng-repeat="c in components" draggable>{{c.name}}</p>
+          <p ng-repeat="c in availableComponents" draggable id="{{$index}}">{{c.name}}</p>
       </div>
       <div>
         <h3>Resources</h3>
